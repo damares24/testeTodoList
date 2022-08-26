@@ -1,72 +1,7 @@
 const puppeteer = require('puppeteer');
-const timeout = 600000000;
+const timeout = 60000;
 
-describe('TODO - LIST',
-() => {
-
-  let browser
-  let page
-    //Abrir o navegador
-    beforeAll(async () => {
-      browser = await puppeteer.launch( {headless: false});
-      page = await browser.newPage();
-      await page.goto(`file://${__dirname}/index.html`);
-      
-      
-    }, timeout);
-    //Fechar o navegador
-    afterAll(async () => {
-      await page.close()
-      browser.close();
-    })
-
-    //Adicionar tarefa na lista
-    it('Adicionar tarefa na lista', async () => {
-      await page.waitForSelector('#newItem')
-      await page.click('#newItem')
-      await page.keyboard.type('Tarefa')
-      await page.keyboard.press("Enter")
-      await expect(page).toMatch('Tarefa')
-
-      await page.screenshot( { path: 'adicionar.png'})
-      
-     
-
-    },timeout);
-
-    //Adiconar tarefa vazia na lista
-    it('Adicionar tarefa vazia', async () => {
-      await page.waitForSelector('#newItem')
-      await page.click('#newItem')
-      await page.keyboard.type('')
-      await page.keyboard.press("Enter")
-      await expect(page).toMatch('Tarefa')
-      await page.screenshot( { path: 'adicionarVazio.png'})
-   
-
-    },timeout);
-
-    //  Concluir 
-    it ('Concluir Tarefa', async() => {
-      await page.waitForSelector('#todoList')
-      await page.click('#todoList')
-      await expect(page).toClick('#todoList')
-      await page.screenshot( { path: 'concluir.png'})
-
-    },timeout);
-
-    //Remover tarefa
-    it ('Remover Tarefa', async() => {
-      await page.click('label[class="todo__item"]')
-      await page.waitForSelector('input[type=button][value="X"][data-indice="0"]')
-      await page.click('input[type=button][value="X"][data-indice="0"]')
-      await expect(page).toClick('input[type=button][value="X"][data-indice="0"]')
-      await page.screenshot( { path: 'remover.png'} )
-
-    },timeout);
-
-})
-
+//TESTE UNITÁRIO
 
 describe("TODO - LIST", () => {
   beforeAll(async () => {
@@ -235,5 +170,73 @@ describe("TODO - LIST", () => {
     expect(item).toMatch("");
   })
 })
+
+//TESTE END TO END
+describe('TODO - LIST',
+() => {
+
+  let browser
+  let page
+    //Abrir o navegador
+    beforeAll(async () => {
+      browser = await puppeteer.launch( {headless: false});
+      page = await browser.newPage();
+      await page.goto(`file://${__dirname}/index.html`);
+      
+      
+    }, timeout);
+    //Fechar o navegador
+    afterAll(async () => {
+      await page.close()
+      browser.close();
+    })
+
+    //Adicionar tarefa na lista
+    it('Adicionar tarefa na lista', async () => {
+      await page.waitForSelector('#newItem')
+      await page.click('#newItem')
+      await page.keyboard.type('Tarefa')
+      await page.keyboard.press("Enter")
+      await expect(page).toMatch('Tarefa')
+
+      await page.screenshot( { path: 'adicionar.png'})
+      
+     
+
+    },timeout);
+
+    //Adiconar tarefa vazia na lista
+    it('Adicionar tarefa vazia', async () => {
+      await page.waitForSelector('#newItem')
+      await page.click('#newItem')
+      await page.keyboard.type('')
+      await page.keyboard.press("Enter")
+      await expect(page).toMatch('Tarefa')
+      await page.screenshot( { path: 'adicionarVazio.png'})
+   
+
+    },timeout);
+
+    //  Concluir 
+    it ('Concluir Tarefa', async() => {
+      await page.waitForSelector('#todoList')
+      await page.click('#todoList')
+      await expect(page).toClick('#todoList')
+      await page.screenshot( { path: 'concluir.png'})
+
+    },timeout);
+
+    //Remover tarefa
+    it ('Remover Tarefa', async() => {
+      await page.click('label[class="todo__item"]')
+      await page.waitForSelector('input[type=button][value="X"][data-indice="0"]')
+      await page.click('input[type=button][value="X"][data-indice="0"]')
+      await expect(page).toClick('input[type=button][value="X"][data-indice="0"]')
+      await page.screenshot( { path: 'remover.png'} )
+
+    },timeout);
+
+})
+
 
 
